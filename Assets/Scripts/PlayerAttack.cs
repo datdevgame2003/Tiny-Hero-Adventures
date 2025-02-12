@@ -9,14 +9,12 @@ public class PlayerAttack : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        PlayerUI.instance.attackButton.onClick.AddListener(Attack);
+    }
+    private void Attack()
+    {
+        anim.SetTrigger("attack");
     }
 
-    
-   private void FixedUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.J)) 
-        {
-            anim.SetTrigger("attack");
-        }
-    }
+
 }
