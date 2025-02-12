@@ -352,7 +352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 112.2
+      value: 225.2
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -442,7 +442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 988, y: -444.6}
+  m_AnchoredPosition: {x: 988, y: -350.5}
   m_SizeDelta: {x: 160, y: 123.0183}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &600569641
@@ -796,7 +796,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 758, y: -449.86993}
+  m_AnchoredPosition: {x: 758, y: -350.3}
   m_SizeDelta: {x: 160, y: 141.871}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &974240453
@@ -1121,10 +1121,10 @@ GameObject:
   - component: {fileID: 1529541670}
   - component: {fileID: 1529541669}
   - component: {fileID: 1529541668}
-  - component: {fileID: 1529541667}
   - component: {fileID: 1529541672}
   - component: {fileID: 1529541674}
   - component: {fileID: 1529541675}
+  - component: {fileID: 1529541676}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1132,19 +1132,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1529541667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1529541666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b775b1347601143a7dd58474704dce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 7
 --- !u!50 &1529541668
 Rigidbody2D:
   serializedVersion: 4
@@ -1204,7 +1191,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.003566265, y: -0.25961238}
+  m_Offset: {x: -0.02233088, y: -0.25961238}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1215,7 +1202,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.34853333, y: 0.7607752}
+  m_Size: {x: 0.67799497, y: 0.7607752}
   m_EdgeRadius: 0
 --- !u!212 &1529541670
 SpriteRenderer:
@@ -1278,7 +1265,7 @@ Transform:
   m_GameObject: {fileID: 1529541666}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.95, y: -4.81, z: 0}
+  m_LocalPosition: {x: -14.95, y: -5, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1332,6 +1319,20 @@ MonoBehaviour:
   joystick: {fileID: 568637316}
   jumpButton: {fileID: 974240453}
   attackButton: {fileID: 600569641}
+--- !u!114 &1529541676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529541666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b775b1347601143a7dd58474704dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 7
+  jumpForce: 7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
