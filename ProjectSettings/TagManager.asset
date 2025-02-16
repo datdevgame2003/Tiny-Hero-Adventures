@@ -43,3 +43,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: BG
+    uniqueID: 3226646163
+    locked: 0
+  - name: Player
+    uniqueID: 1649220701
+    locked: 0
+  - name: Tile
+    uniqueID: 239191837
+    locked: 0
+  - name: Ground
+    uniqueID: 3617187093
+    locked: 0
