@@ -52,6 +52,12 @@ TagManager:
   - name: Tile
     uniqueID: 239191837
     locked: 0
+  - name: Enemy
+    uniqueID: 3026875231
+    locked: 0
   - name: Ground
     uniqueID: 3617187093
+    locked: 0
+  - name: path
+    uniqueID: 2218844653
     locked: 0
