@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 1;
     public float waitTime = 1;
     private EnemyHealth enemyHealth;
-    private void Start()
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(MoveTo());
     }
 
-    private IEnumerator MoveTo()
+    IEnumerator MoveTo()
     {
         rb.velocity = Vector2.zero;
         anim.Play("Enemy Idle");
