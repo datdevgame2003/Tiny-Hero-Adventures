@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ab12f36201a8e4da2cd93e63f510ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 5
+  spawnInterval: 8
   paths:
   - {fileID: 1049536730}
   - {fileID: 194414185}
