@@ -62,3 +62,6 @@ TagManager:
   - name: path
     uniqueID: 2218844653
     locked: 0
+  - name: Trap
+    uniqueID: 1672591327
+    locked: 0
