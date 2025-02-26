@@ -6,18 +6,29 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth;
-   
+    private HealthManage healthBar;
     private void Start()
     {
-        currentHealth = maxHealth; 
-
+        currentHealth = maxHealth;
+        healthBar = GetComponentInChildren<HealthManage>();
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
     }
-    
+    private void OnEnable()
+    {
+        ResetHealth();
+    }
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         Debug.Log("Enemy is attacked! Current health: " + currentHealth);
-
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
         if (currentHealth <= 0)
         {
             Die();
@@ -38,5 +49,9 @@ public class EnemyHealth : MonoBehaviour
     public void ResetHealth()
     {
         currentHealth = maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(maxHealth);
+        }
     }
 }

@@ -65,3 +65,6 @@ TagManager:
   - name: Trap
     uniqueID: 1672591327
     locked: 0
+  - name: health
+    uniqueID: 1517636197
+    locked: 0
