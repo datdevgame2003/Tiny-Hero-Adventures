@@ -2,29 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowTrap : MonoBehaviour
+public class ArrowController : MonoBehaviour
 {
-    public float moveSpeed = 4f;
-    public Transform pointA;
-    public Transform pointB;
-    private Vector3 targetPoint;
-    private void Start()
+    private Vector2 initialPosition; 
+    private Rigidbody2D rb;
+    private int damage= 5;
+
+    void Start()
     {
-        targetPoint = pointA.position;
+        rb = GetComponent<Rigidbody2D>();
+        initialPosition = transform.position; 
     }
+
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPoint, moveSpeed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
+       
+        if (transform.position.y == -5.8f) 
         {
-            if (transform.position == pointA.position)
+            ResetArrow();
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "ground") 
+        {
+            ResetArrow();
+        }
+       else if(collision.gameObject.tag == "Player")
+        {
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if(playerHealth != null)
             {
-                targetPoint = pointB.position;
-            }
-            else
-            {
-                targetPoint = pointA.position;
+                ResetArrow();
+                playerHealth.TakeDamage(damage);
+             
             }
         }
     }
+
+   private void ResetArrow()
+    {
+        transform.position = initialPosition; 
+        rb.velocity = Vector2.zero; 
+    }
 }
+
+

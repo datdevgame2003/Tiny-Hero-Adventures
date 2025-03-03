@@ -9,6 +9,7 @@ public class CirleTrap : MonoBehaviour
     public Transform pointA;
     public Transform pointB;
     private Vector3 targetPoint;
+    private int damage = 5;
     private void Start()
     {
         targetPoint = pointA.position;
@@ -31,5 +32,19 @@ public class CirleTrap : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Rotate(0, 0, rotationSpeed);
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+     
+        if (collision.gameObject.tag == "Player")
+        {
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+              
+                playerHealth.TakeDamage(damage);
+
+            }
+        }
     }
 }

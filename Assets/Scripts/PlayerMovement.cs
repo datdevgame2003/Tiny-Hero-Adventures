@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
    
     private void Start()
     {
+       
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         //PlayerUI.instance.jumpButton.onClick.AddListener(Jump);
@@ -51,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("run", horizontalInput != 0);
       
     }
+  
+
     //private void Jump()
     //{
     //    if (grounded)
@@ -60,13 +63,5 @@ public class PlayerMovement : MonoBehaviour
     //        grounded = false;
     //    }
     //}
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.tag == "ground")
-    //    {
-    //        grounded = true;
-           
-           
-    //    }
-    //}
+
 }

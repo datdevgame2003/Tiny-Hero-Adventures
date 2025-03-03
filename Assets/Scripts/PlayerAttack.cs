@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 {
     private Animator anim;
     [SerializeField] private float attackRange = 1.5f; 
-    [SerializeField] private int attackDamage = 10; 
+    [SerializeField] private int attackDamage = 20; 
     [SerializeField] private float attackCooldown = 0.5f;
     [SerializeField] private Transform attackPoint;
     private bool canAttack = true;
