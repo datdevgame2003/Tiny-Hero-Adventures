@@ -6,9 +6,13 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth;
+    private Animator anim;
     private HealthManage healthBar;
+    [SerializeField]
+    GameObject HitEffectPrefab, ExplosionPrefab;
     private void Start()
     {
+        anim = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<HealthManage>();
         if (healthBar != null)
@@ -24,6 +28,8 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        Vector3 effectOffset = new Vector3(0, 2f, 0);
+        GameObject hit = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
         Debug.Log("Enemy is attacked! Current health: " + currentHealth);
         if (healthBar != null)
         {
@@ -31,6 +37,7 @@ public class EnemyHealth : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
+          
             Die();
            
 
@@ -40,10 +47,13 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Enemy is died!");
+        anim.SetTrigger("die");
+        Vector3 effectOffset = new Vector3(0, 2f, 0);
+        GameObject ex = Instantiate(ExplosionPrefab, transform.position + effectOffset, Quaternion.identity);
         gameObject.SetActive(false); // an enemy khong huy
 
         // tra enemy ve pool
-        EnemyPool.Instance.ReleaseEnemy(GetComponent<Enemy>());
+        EnemyPool.Instance.ReleaseEnemy(GetComponent<EnemyAI>());
     }
 
     public void ResetHealth()

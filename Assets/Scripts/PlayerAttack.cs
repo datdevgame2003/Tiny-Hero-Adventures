@@ -11,10 +11,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackCooldown = 0.5f;
     [SerializeField] private Transform attackPoint;
     private bool canAttack = true;
-  
+    [SerializeField] private AudioClip attackSound;
+    private AudioSource audioSource;
     private void Start()
     {
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         //PlayerUI.instance.attackButton.onClick.AddListener(Attack);
     }
    
@@ -29,7 +31,10 @@ public class PlayerAttack : MonoBehaviour
     {
         canAttack = false; //  ko spam attack
         anim.SetTrigger("attack");
-
+        if (attackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(attackSound);
+        }
         yield return new WaitForSeconds(0.1f); // Cho animation attack
 
         // Kiem tra enemy trong vung attack
@@ -38,6 +43,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (enemy.CompareTag("Enemy"))
             {
+               
                 enemy.GetComponent<EnemyHealth>()?.TakeDamage(attackDamage);
             }
         }

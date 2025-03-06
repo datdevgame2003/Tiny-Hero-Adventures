@@ -5,25 +5,25 @@ public class EnemyPool : MonoBehaviour
 {
     public static EnemyPool Instance { get; private set; }
 
-    [SerializeField] private Enemy enemyPrefab;
+    [SerializeField] private EnemyAI enemyPrefab;
     [SerializeField] private int initialSize = 5;
-    private Queue<Enemy> pool = new Queue<Enemy>();
+    private Queue<EnemyAI> pool = new Queue<EnemyAI>();
 
     private void Awake()
     {
         Instance = this;
         for (int i = 0; i < initialSize; i++)
         {
-            Enemy enemy = Instantiate(enemyPrefab, transform);
+            EnemyAI enemy = Instantiate(enemyPrefab, transform);
             enemy.gameObject.SetActive(false);
             pool.Enqueue(enemy);
-            
+
         }
     }
 
-    public Enemy GetEnemy(Vector3 spawnPosition)
+    public EnemyAI GetEnemy(Vector3 spawnPosition)
     {
-        Enemy enemy;
+        EnemyAI enemy;
         if (pool.Count > 0)
         {
             enemy = pool.Dequeue();
@@ -38,7 +38,7 @@ public class EnemyPool : MonoBehaviour
         return enemy;
     }
 
-    public void ReleaseEnemy(Enemy enemy)
+    public void ReleaseEnemy(EnemyAI enemy)
     {
         enemy.gameObject.SetActive(false);
         pool.Enqueue(enemy);
