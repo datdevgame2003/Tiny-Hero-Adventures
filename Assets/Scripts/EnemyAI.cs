@@ -4,42 +4,127 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    SpriteRenderer spriteRendererComponent;
+    public enum State { Idle,Attack }
+    private State currentState = State.Idle;
+    SpriteRenderer spriteRenderer;
+    private Animator anim;
     private Rigidbody2D rb;
-    GameObject playerOJ;
+    public Transform player;
+    public float detectionRange = 4f; // Khoảng cách phát hiện Player
+    public float attackRange = 1f;
     public float moveSpeed;
     private EnemyHealth enemyHealth;
-    
-   void Awake()
+    private Vector3 startPosition;
+    public int enemyDamage = 5;
+    private void Start()
     {
-        spriteRendererComponent = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        playerOJ = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        startPosition = transform.position;
         enemyHealth = GetComponent<EnemyHealth>();
-    }
-  void Start()
-    {
-        StartCoroutine(ChasePlayer());
+        anim = GetComponent<Animator>();
     }
 
- IEnumerator ChasePlayer()
+    private void Update()
     {
-        Vector2 DirectionToPlayer = Direction2Points2D(this.transform.position, playerOJ.transform.position);
-        rb.velocity = DirectionToPlayer * moveSpeed;
-        if (DirectionToPlayer.x > 0)
-            spriteRendererComponent.flipX = true; // Hướng sang phải
-        else if (DirectionToPlayer.x < 0)
-            spriteRendererComponent.flipX = false;
-        yield return new WaitForSeconds(1);
-        StartCoroutine(ChasePlayer());
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        bool isPlayerInAttackRange = distanceToPlayer < attackRange;
+        bool isPlayerInDetectionRange = distanceToPlayer < detectionRange;
+      
+        switch (currentState)
+        {
+            case State.Idle:
+                anim.SetBool("isAttacking", false);
+                if (isPlayerInDetectionRange && isPlayerInAttackRange)
+                {
+                    ChangeState(State.Attack);
+                }
+                break;
+
+            case State.Attack:
+               
+                anim.SetBool("isAttacking", true);
+                FlipDirection();
+                if (!isPlayerInAttackRange)
+                    ChangeState(State.Idle);
+                break;
+        }
     }
-    Vector2 Direction2Points2D(Vector2 Point1, Vector2 Point2) // Start from Point1
+    void FlipDirection()
     {
-        var Direction2D = Point2 - Point1;
-        return Direction2D.normalized;
+        if (player == null) return;
+
+        // Nếu Player ở bên trái, flipX = true, nếu ở bên phải, flipX = false
+        spriteRenderer.flipX = player.position.x > transform.position.x;
     }
 
-    public void TakeDamage(int damage)
+   
+    void ChangeState(State newState)
+    {
+        currentState = newState;
+        //switch (newState)
+        //{
+        //    case State.Idle:
+        //        anim.SetBool("isRunning", false);
+        //        anim.SetBool("isAttacking", false);
+        //        break;
+        //    case State.Run:
+        //        anim.SetBool("isRunning", true);
+        //        anim.SetBool("isAttacking", false);
+        //        break;
+        //    case State.Attack:
+        //        anim.SetBool("isRunning", false);
+        //        anim.SetBool("isAttacking", true);
+        //        break;
+        //}
+    }
+
+    //void MoveTowardsPlayer()
+    //{
+    //    Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+    //    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+
+    //}
+
+    //void ReturnToStart()
+    //{
+    //    Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+    //    if (Vector2.Distance(transform.position, startPosition) > 0.1f)
+    //    {
+    //        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    //    }
+    //    else
+    //    {
+    //        // Khi đến nơi, dừng lại và chuyển về trạng thái Idle
+    //        transform.position = startPosition;
+    //        ChangeState(State.Idle);
+    //    }
+    //}
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            ChangeState(State.Attack);
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+               
+                playerHealth.TakeDamage(enemyDamage);
+
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+{
+    if (collision.CompareTag("Player"))
+    {
+        ChangeState(State.Idle);
+    }
+}
+public void TakeDamage(int damage)
     {
         enemyHealth.TakeDamage(damage);
     }

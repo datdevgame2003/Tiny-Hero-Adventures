@@ -47,7 +47,7 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Enemy is died!");
-        anim.SetTrigger("die");
+       
         Vector3 effectOffset = new Vector3(0, 2f, 0);
         GameObject ex = Instantiate(ExplosionPrefab, transform.position + effectOffset, Quaternion.identity);
         gameObject.SetActive(false); // an enemy khong huy

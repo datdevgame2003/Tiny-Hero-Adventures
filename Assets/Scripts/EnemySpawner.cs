@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     //[SerializeField] private List<GameObject> paths;
     [SerializeField] private int maxEnemies = 5;
     private int currentEnemyCount = 0;
+    [SerializeField] private List<Transform> spawnPoints;
     private void Start()
     {
         StartCoroutine(SpawnEnemies());
@@ -28,10 +29,14 @@ private IEnumerator SpawnEnemies()
 }
 private void SpawnEnemy()
 {
-    //Enemy enemy = EnemyPool.Instance.GetEnemy();
-    //enemy.transform.position = spawnPoint.position;
-    Vector3 spawnPosition = transform.position;
-    EnemyAI enemy = EnemyPool.Instance.GetEnemy(spawnPosition);
+        //Enemy enemy = EnemyPool.Instance.GetEnemy();
+        //enemy.transform.position = spawnPoint.position;
+        if (spawnPoints.Count == 0) return; // Kiểm tra danh sách có rỗng không
+
+        // Chọn ngẫu nhiên một vị trí trong danh sách
+        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+        //Vector3 spawnPosition = transform.position;
+        EnemyAI enemy = EnemyPool.Instance.GetEnemy(randomSpawnPoint.position);
     enemy.GetComponent<EnemyHealth>()?.ResetHealth();
         //enemy.SetPath(new List<GameObject>(paths));
         currentEnemyCount++;
