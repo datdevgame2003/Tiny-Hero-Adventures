@@ -10,6 +10,9 @@ public class EnemyHealth : MonoBehaviour
     private HealthManage healthBar;
     [SerializeField]
     GameObject HitEffectPrefab, ExplosionPrefab;
+    [SerializeField] private AudioClip dieSound;
+    private AudioSource audioSource;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -19,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
         {
             healthBar.SetMaxHealth(maxHealth);
         }
+        audioSource = GetComponent<AudioSource>();
     }
     private void OnEnable()
     {
@@ -37,7 +41,10 @@ public class EnemyHealth : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
-          
+            if (dieSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(dieSound);
+            }
             Die();
            
 
@@ -47,13 +54,17 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Enemy is died!");
-       
+
+        if (dieSound != null)
+        {
+            AudioSource.PlayClipAtPoint(dieSound, transform.position);
+        }
         Vector3 effectOffset = new Vector3(0, 2f, 0);
         GameObject ex = Instantiate(ExplosionPrefab, transform.position + effectOffset, Quaternion.identity);
-        gameObject.SetActive(false); // an enemy khong huy
-
+        //gameObject.SetActive(false); // an enemy khong huy
+        Destroy(gameObject);
         // tra enemy ve pool
-        EnemyPool.Instance.ReleaseEnemy(GetComponent<EnemyAI>());
+        //EnemyPool.Instance.ReleaseEnemy(GetComponent<EnemyAI>());
     }
 
     public void ResetHealth()
@@ -64,4 +75,11 @@ public class EnemyHealth : MonoBehaviour
             healthBar.SetHealth(maxHealth);
         }
     }
+    //private void PlayDieSound()
+    //{
+    //    if (dieSound != null && audioSource != null)
+    //    {
+    //        audioSource.PlayOneShot(dieSound);
+    //    }
+    //}
 }

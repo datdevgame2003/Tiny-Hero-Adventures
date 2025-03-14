@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    public enum State { Idle,Attack }
+    public enum State { Idle,Run,Attack }
     private State currentState = State.Idle;
     SpriteRenderer spriteRenderer;
     private Animator anim;
     private Rigidbody2D rb;
     public Transform player;
-    public float detectionRange = 4f; // Khoảng cách phát hiện Player
+    public float detectionRange = 4f; 
     public float attackRange = 1f;
     public float moveSpeed;
+  
     private EnemyHealth enemyHealth;
     private Vector3 startPosition;
     public int enemyDamage = 5;
+    //private float attackCooldown = 1.5f; 
+    //private float lastAttackTime;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         startPosition = transform.position;
+       
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
     }
@@ -35,19 +39,33 @@ public class EnemyAI : MonoBehaviour
         switch (currentState)
         {
             case State.Idle:
+                anim.SetBool("isRunning", false);
                 anim.SetBool("isAttacking", false);
-                if (isPlayerInDetectionRange && isPlayerInAttackRange)
+                if (isPlayerInDetectionRange && !isPlayerInAttackRange)
                 {
                     ChangeState(State.Attack);
                 }
                 break;
 
-            case State.Attack:
-               
-                anim.SetBool("isAttacking", true);
+            case State.Run:
+                anim.SetBool("isRunning", true);
+                anim.SetBool("isAttacking", false);
                 FlipDirection();
-                if (!isPlayerInAttackRange)
+                MoveTowards();
+
+                if (isPlayerInAttackRange)
+                {
                     ChangeState(State.Idle);
+                    Invoke(nameof(StartAttack), 0.1f);
+                }
+                break;
+            case State.Attack:
+                anim.SetBool("isRunning", false);
+                anim.SetBool("isAttacking", true);  
+                FlipDirection();
+               
+                if (!isPlayerInAttackRange)
+                    ChangeState(State.Run);
                 break;
         }
     }
@@ -55,65 +73,45 @@ public class EnemyAI : MonoBehaviour
     {
         if (player == null) return;
 
-        // Nếu Player ở bên trái, flipX = true, nếu ở bên phải, flipX = false
+       
         spriteRenderer.flipX = player.position.x > transform.position.x;
     }
+    void StartAttack()
+    {
+        if (currentState == State.Idle) 
+        {
+            ChangeState(State.Attack);
+        }
+    }
 
-   
     void ChangeState(State newState)
     {
         currentState = newState;
-        //switch (newState)
-        //{
-        //    case State.Idle:
-        //        anim.SetBool("isRunning", false);
-        //        anim.SetBool("isAttacking", false);
-        //        break;
-        //    case State.Run:
-        //        anim.SetBool("isRunning", true);
-        //        anim.SetBool("isAttacking", false);
-        //        break;
-        //    case State.Attack:
-        //        anim.SetBool("isRunning", false);
-        //        anim.SetBool("isAttacking", true);
-        //        break;
-        //}
+       
     }
 
-    //void MoveTowardsPlayer()
-    //{
-    //    Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
-    //    transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+    void MoveTowards()
+    {
+        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        FlipDirection();
 
-
-    //}
-
-    //void ReturnToStart()
-    //{
-    //    Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
-    //    if (Vector2.Distance(transform.position, startPosition) > 0.1f)
-    //    {
-    //        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-    //    }
-    //    else
-    //    {
-    //        // Khi đến nơi, dừng lại và chuyển về trạng thái Idle
-    //        transform.position = startPosition;
-    //        ChangeState(State.Idle);
-    //    }
-    //}
-    void OnTriggerEnter2D(Collider2D collision)
+    }
+     
+        void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            ChangeState(State.Attack);
+            ChangeState(State.Idle);
             PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-               
+
                 playerHealth.TakeDamage(enemyDamage);
 
             }
+            Invoke(nameof(StartAttack), 0.1f);
+           
         }
     }
 
@@ -121,10 +119,13 @@ public class EnemyAI : MonoBehaviour
 {
     if (collision.CompareTag("Player"))
     {
-        ChangeState(State.Idle);
-    }
+            ChangeState(State.Run);
+
+
+        }
 }
-public void TakeDamage(int damage)
+   
+    public void TakeDamage(int damage)
     {
         enemyHealth.TakeDamage(damage);
     }

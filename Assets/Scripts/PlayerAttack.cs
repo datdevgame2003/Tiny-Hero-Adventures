@@ -49,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         yield return new WaitForSeconds(attackCooldown); // Cho tg attack
-        canAttack = true; // duoc đánh tiep
+        canAttack = true; // duoc đanh tiep
     }
   
     private void OnDrawGizmosSelected()

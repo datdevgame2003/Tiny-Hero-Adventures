@@ -370,6 +370,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fixed Joystick
       objectReference: {fileID: 0}
+    - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2929252285020698103, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_Color.a
       value: 0.35686275
@@ -1304,6 +1308,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b00504802acbb4b96af0ec19016a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 1.5
+  attackDamage: 20
+  attackCooldown: 0.5
+  attackPoint: {fileID: 0}
+  attackSound: {fileID: 0}
 --- !u!114 &1529541675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1333,6 +1342,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 7
   jumpForce: 7
+  _allowJump: {fileID: 0}
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1675380932
 GameObject:
   m_ObjectHideFlags: 0

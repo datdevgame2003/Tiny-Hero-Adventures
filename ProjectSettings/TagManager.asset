@@ -75,3 +75,6 @@ TagManager:
   - name: chest
     uniqueID: 4060641399
     locked: 0
+  - name: platform
+    uniqueID: 21476055
+    locked: 0
