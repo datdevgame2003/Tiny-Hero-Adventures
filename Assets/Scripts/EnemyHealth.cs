@@ -41,10 +41,7 @@ public class EnemyHealth : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
-            if (dieSound != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(dieSound);
-            }
+           
             Die();
            
 
@@ -75,11 +72,5 @@ public class EnemyHealth : MonoBehaviour
             healthBar.SetHealth(maxHealth);
         }
     }
-    //private void PlayDieSound()
-    //{
-    //    if (dieSound != null && audioSource != null)
-    //    {
-    //        audioSource.PlayOneShot(dieSound);
-    //    }
-    //}
+    
 }

@@ -11,12 +11,13 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D rb;
     public Transform player;
     public float detectionRange = 4f; 
-    public float attackRange = 1f;
+    public float attackRange = 4f;
     public float moveSpeed;
-  
+    private PlayerHealth playerHealth;
     private EnemyHealth enemyHealth;
-    private Vector3 startPosition;
+    
     public int enemyDamage = 5;
+   
     //private float attackCooldown = 1.5f; 
     //private float lastAttackTime;
     private void Start()
@@ -24,9 +25,11 @@ public class EnemyAI : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        startPosition = transform.position;
+        //startPosition = transform.position;
        
         enemyHealth = GetComponent<EnemyHealth>();
+        playerHealth = player.GetComponent<PlayerHealth>();
+     
         anim = GetComponent<Animator>();
     }
 
@@ -41,6 +44,7 @@ public class EnemyAI : MonoBehaviour
             case State.Idle:
                 anim.SetBool("isRunning", false);
                 anim.SetBool("isAttacking", false);
+             
                 if (isPlayerInDetectionRange && !isPlayerInAttackRange)
                 {
                     ChangeState(State.Attack);
@@ -50,22 +54,25 @@ public class EnemyAI : MonoBehaviour
             case State.Run:
                 anim.SetBool("isRunning", true);
                 anim.SetBool("isAttacking", false);
+               
                 FlipDirection();
                 MoveTowards();
 
                 if (isPlayerInAttackRange)
                 {
                     ChangeState(State.Idle);
-                    Invoke(nameof(StartAttack), 0.1f);
+                    Invoke(nameof(StartAttack), 1f);
                 }
                 break;
             case State.Attack:
+                
                 anim.SetBool("isRunning", false);
-                anim.SetBool("isAttacking", true);  
+                anim.SetBool("isAttacking", true);
                 FlipDirection();
-               
+                DetectPlayer();
                 if (!isPlayerInAttackRange)
                     ChangeState(State.Run);
+              
                 break;
         }
     }
@@ -83,7 +90,7 @@ public class EnemyAI : MonoBehaviour
             ChangeState(State.Attack);
         }
     }
-
+  
     void ChangeState(State newState)
     {
         currentState = newState;
@@ -92,39 +99,62 @@ public class EnemyAI : MonoBehaviour
 
     void MoveTowards()
     {
-        Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        FlipDirection();
+
+        float stopDistance = 3.8f; 
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distanceToPlayer > stopDistance)
+        {
+            Vector3 targetPosition = new Vector3(player.position.x, transform.position.y, transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            anim.SetBool("isRunning", true);
+            anim.SetBool("isAttacking", false);
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isAttacking", true);
+        }
+            FlipDirection();
+        }
+      
+    
+    void DetectPlayer()
+    {
+        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, attackRange, LayerMask.GetMask("Player"));
+        if (playerCollider != null)
+        {
+            AttackPlayer();
+        }
 
     }
-     
+    void AttackPlayer()
+    {
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(enemyDamage);
+            Debug.Log("🔥 Enemy Attack!");
+        }
+    }
         void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
             ChangeState(State.Idle);
-            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-
-                playerHealth.TakeDamage(enemyDamage);
-
-            }
-            Invoke(nameof(StartAttack), 0.1f);
+            Invoke(nameof(StartAttack), 1f);
            
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
-{
-    if (collision.CompareTag("Player"))
     {
+        if (collision.CompareTag("Player"))
+        {
             ChangeState(State.Run);
 
 
         }
-}
-   
+    }
+
     public void TakeDamage(int damage)
     {
         enemyHealth.TakeDamage(damage);

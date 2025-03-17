@@ -157,7 +157,6 @@ MonoBehaviour:
   HitEffectPrefab: {fileID: 2504214343621411470, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
   ExplosionPrefab: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
   dieSound: {fileID: 8300000, guid: 38b1d1c2e9e9e3442b39b169f462ca38, type: 3}
-  audioSource: {fileID: 1702180118705961397}
 --- !u!114 &6622248148902509485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,8 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  detectionRange: 4
-  attackRange: 1
+  detectionRange: 5
+  attackRange: 3
   moveSpeed: 2
   enemyDamage: 5
 --- !u!61 &-5246646904953924936
@@ -207,7 +206,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.075528145, y: 2.663987}
+  m_Offset: {x: 1.0302029, y: 2.663987}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -218,7 +217,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4942112, y: 3.4773889}
+  m_Size: {x: 4.5180473, y: 3.4773889}
   m_EdgeRadius: 0
 --- !u!82 &1702180118705961397
 AudioSource:
