@@ -43,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (enemy.CompareTag("Enemy"))
             {
-               
+
                 enemy.GetComponent<EnemyHealth>()?.TakeDamage(attackDamage);
             }
         }

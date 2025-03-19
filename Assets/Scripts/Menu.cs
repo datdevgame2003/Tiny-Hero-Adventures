@@ -12,4 +12,8 @@ public class Menu : MonoBehaviour
     {
         Application.Quit();
     }
+    public void DeletePrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }

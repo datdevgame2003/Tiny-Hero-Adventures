@@ -11,10 +11,10 @@ public class PlayerHealth : MonoBehaviour
     GameObject HitEffectPrefab, ExplosionPrefab;
     [SerializeField] private AudioClip hitSound;
     private AudioSource audioSource;
-   public Animator anim;
+ 
     private void Start()
     {
-        anim = anim.GetComponent<Animator>();
+      
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<HealthManage>();
         if (healthBar != null)
@@ -32,13 +32,13 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        anim.SetTrigger("hurt");
+       
         PlayHitSound();
         Vector3 effectOffset = new Vector3(0, 0.5f, 0);
         GameObject hit = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
         healthBar.SetHealth(currentHealth);
         Debug.Log("Player is attacked! Current health: " + currentHealth);
-        if (currentHealth <= 0)
+        if (currentHealth == 0)
         {
             Die();
 
@@ -48,8 +48,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Player is died!");
-      
-      /*  gameObject.SetActive(false);*/ // an enemy khong huy
+        gameObject.SetActive(false); // an enemy khong huy
         Vector3 effectOffset = new Vector3(0, 1f, 0);
         GameObject ex = Instantiate(ExplosionPrefab, transform.position + effectOffset, Quaternion.identity);
     }
