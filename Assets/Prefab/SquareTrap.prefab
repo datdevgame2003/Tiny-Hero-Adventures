@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 463251351266642516}
   - component: {fileID: 4845473645711909696}
   - component: {fileID: 6182317211539916088}
-  - component: {fileID: 1563602003142103209}
+  - component: {fileID: 6754367466725369272}
+  - component: {fileID: 7856474641014023500}
   m_Layer: 0
   m_Name: SquareTrap
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1090078253172255535}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 66.0466, y: 12.7, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -131,7 +132,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.492424, y: 4.306219}
   m_EdgeRadius: 0
---- !u!114 &1563602003142103209
+--- !u!95 &6754367466725369272
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090078253172255535}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7f1161b1684223247975ee97597db3d6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7856474641014023500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,6 +162,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1090078253172255535}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 887986efff6fce044bf2464c5d36d44c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8830e4a75003bfb4b9ea392aa7969988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementDistance: 3
+  speed: 3
+  dameTrap: 5

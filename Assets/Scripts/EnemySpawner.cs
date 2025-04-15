@@ -35,8 +35,8 @@ private void SpawnEnemy()
        
         Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
        
-        EnemyAI enemy = EnemyPool.Instance.GetEnemy(randomSpawnPoint.position);
-    enemy.GetComponent<EnemyHealth>()?.ResetHealth();
+        //Golem enemy = EnemyPool.Instance.GetEnemy(randomSpawnPoint.position);
+  //  enemy.GetComponent<EnemyHealth>()?.ResetHealth();
        
         currentEnemyCount++;
 
@@ -45,4 +45,5 @@ public void EnemyDestroyed()
 {
     currentEnemyCount--;
 }
+
 }

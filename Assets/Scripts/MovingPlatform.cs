@@ -26,18 +26,18 @@ public class MovingPlatform : MonoBehaviour
         }
         transform.position = Vector2.MoveTowards(transform.position, targetPoint, speed * Time.deltaTime);
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if(collision.CompareTag("Player"))
-    //    {
-    //        collision.transform.SetParent(this.transform);
-    //    }
-    //}
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if(collision.CompareTag("Player"))
-    //    {
-    //        collision.transform.SetParent(null);
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.SetParent(this.transform);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.SetParent(null);
+        }
+    }
 }

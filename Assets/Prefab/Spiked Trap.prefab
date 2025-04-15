@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 3
-  moveSpeed: 4
+  moveSpeed: 2
   pointA: {fileID: 3128856541082265685}
   pointB: {fileID: 5088808776936522520}
 --- !u!95 &7461527862012482527
