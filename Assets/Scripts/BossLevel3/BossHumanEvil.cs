@@ -36,7 +36,7 @@ public class BossHumanEvil : MonoBehaviour
         bossHealthBar.value = bossHP;
         if (bossHP > 0)
         {
-            //animator.SetTrigger("damage");
+            animator.SetTrigger("damage");
             Vector3 effectOffset = new Vector3(0, 1f, 0);
             GameObject ex = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
             animator.SetBool("isChasing", true);

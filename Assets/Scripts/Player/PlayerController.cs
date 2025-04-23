@@ -13,7 +13,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D body;
     private Animator anim;
     private bool grounded;
-   
+    private float velocityX;
+    public float smoothTime = 0.05f;
     private void Start()
     {
        
@@ -25,9 +26,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         float horizontalInput = PlayerUI.instance.joystick.Horizontal;
+        if (Mathf.Abs(horizontalInput) < 0.05f)
+            horizontalInput = 0;
+
+        float targetVelocityX = horizontalInput * speed;
+
+        // Làm mượt di chuyển
+        velocityX = Mathf.SmoothDamp(body.velocity.x, targetVelocityX, ref velocityX, smoothTime);
+        body.velocity = new Vector2(velocityX, body.velocity.y);
         allowJump = Physics2D.OverlapCircle(_allowJump.position, 0.2f,ground);
         //float horizontalInput = Input.GetAxis("Horizontal");
-        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+      //  body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
         if (allowJump)
         {
