@@ -17,16 +17,11 @@ public class PlayerAttack : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
-        //PlayerUI.instance.attackButton.onClick.AddListener(Attack);
+        PlayerUI.instance.attackButton.onClick.AddListener(() => {
+            if (canAttack) StartCoroutine(Attack());
+        });
     }
    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J) && canAttack)
-        {
-            StartCoroutine(Attack());
-        }
-    }
     private IEnumerator Attack()
     {
         canAttack = false; //  ko spam attack
