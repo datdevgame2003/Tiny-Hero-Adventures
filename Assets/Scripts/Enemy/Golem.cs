@@ -39,15 +39,13 @@ public class Golem : MonoBehaviour
             animator.SetTrigger("damage");
             Vector3 effectOffset = new Vector3(0, 1f, 0);
             GameObject ex = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
-            animator.SetBool("isChasing", true);
+            //animator.SetBool("isChasing", true);
         }
         else
         {
             //play death animation for enemy
             StartCoroutine(Die());
             this.enabled = false;
-
-           // EnemyPool.Instance.ReleaseEnemy(GetComponent<Golem>());
            
         }
     }
@@ -61,11 +59,7 @@ public class Golem : MonoBehaviour
     }
     public void PlayerDamage()
     {
-        //if (!target.GetComponent<PlayerHealth>().isInvincible)
-        //{
-        //    target.GetComponent<PlayerHealth>().TakeDamage(5);
-        //}
-        //playerHealth.TakeDamage(200);
+       
        
             target.GetComponent<PlayerHealth>().TakeDamage(10);
     

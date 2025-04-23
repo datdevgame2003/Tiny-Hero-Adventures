@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class BossLevel1 : MonoBehaviour
 {
     GameObject target;
-    public float enemyHP = 500;
+    public float enemyHP = 100;
     public Transform borderCheck;
     public Animator animator;
     [SerializeField]
@@ -35,10 +36,10 @@ public class BossLevel1 : MonoBehaviour
         bossHealthBar.value = enemyHP;
         if (enemyHP > 0)
         {
-            animator.SetTrigger("damage");
+            //animator.SetTrigger("damage");
             Vector3 effectOffset = new Vector3(0, 1f, 0);
             GameObject ex = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
-            //animator.SetBool("isChasing", true);
+            animator.SetBool("isChasing", true);
         }
         else
         {
@@ -53,11 +54,23 @@ public class BossLevel1 : MonoBehaviour
         bossHealthBar.gameObject.SetActive(false);
         yield return new WaitForSeconds(2f); // đợi animation kết thúc
         Destroy(gameObject);
+        AudioManager.instance.Play("LevelCompleted");
+        UnlockNewLevel();
+        SceneController.instance.NextLevel();
     }
     public void PlayerDamage()
     {
-        target.GetComponent<PlayerHealth>().TakeDamage(15);
+        target.GetComponent<PlayerHealth>().TakeDamage(10);
         // playerHealth.TakeDamage(15);
         //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().TakeDamage(15);
+    }
+    void UnlockNewLevel()
+    {
+        if (SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex"))
+        {
+            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
+            PlayerPrefs.Save();
+        }
     }
 }

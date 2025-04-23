@@ -8,6 +8,7 @@ TagManager:
   - ground
   - Enemy
   - FxTemporaire
+  - water
   layers:
   - Default
   - TransparentFX
@@ -80,4 +81,7 @@ TagManager:
     locked: 0
   - name: pointFinish
     uniqueID: 169072471
+    locked: 0
+  - name: coin
+    uniqueID: 1282017697
     locked: 0

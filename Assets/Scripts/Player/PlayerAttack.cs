@@ -46,6 +46,11 @@ public class PlayerAttack : MonoBehaviour
 
                 enemy.GetComponent<Golem>()?.TakeDamage(attackDamage);
                 enemy.GetComponent<BossLevel1>()?.TakeDamage(attackDamage);
+                enemy.GetComponent<BossLevel2>()?.TakeDamage(attackDamage);
+                enemy.GetComponent<BossHumanEvil>()?.TakeDamage(attackDamage);
+                enemy.GetComponent<GolemFrozen>()?.TakeDamage(attackDamage);
+                enemy.GetComponent<BossFire>()?.TakeDamage(attackDamage);
+                enemy.GetComponent<GolemLevel4>()?.TakeDamage(attackDamage);
             }
         }
 

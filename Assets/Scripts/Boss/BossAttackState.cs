@@ -14,9 +14,10 @@ public class BossAttackState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (target == null) return;
         float distance = Vector2.Distance(target.position, animator.transform.position);
         if (distance > 1.5f)
-            animator.SetBool("IsAttacking", false);
+            animator.SetBool("isAttacking", false);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

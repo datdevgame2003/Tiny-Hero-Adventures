@@ -6,16 +6,17 @@ using UnityEngine.SceneManagement;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 100;
-    public int currentHealth = 100;
+    public int currentHealth;
     private HealthManage healthBar;
     [SerializeField]
     GameObject HitEffectPrefab, ExplosionPrefab;
     [SerializeField] private AudioClip hitSound;
     private AudioSource audioSource;
     public bool isInvincible = false;
+    private Animator anim;
     private void Start()
     {
-      
+        anim = GetComponent<Animator>();
         currentHealth = maxHealth;
         healthBar = GetComponentInChildren<HealthManage>();
         if (healthBar != null)
@@ -39,26 +40,25 @@ public class PlayerHealth : MonoBehaviour
         GameObject hit = Instantiate(HitEffectPrefab, transform.position + effectOffset, Quaternion.identity);
         healthBar.SetHealth(currentHealth);
         Debug.Log("Player is attacked! Current health: " + currentHealth);
-        if (currentHealth == 0)
+        if (currentHealth <= 0)
         {
-           
+            currentHealth = 0;
+            Die();
             PlayerManager.isGameOver = true;
             AudioManager.instance.Play("GameOver");
-            Die();
-
+            Time.timeScale = 0;
 
         }
     }
-   
-    
+
+
 
     private void Die()
     {
         Debug.Log("Player is died!");
-        gameObject.SetActive(false);
-        
-        Vector3 effectOffset = new Vector3(0, 1f, 0);
-        GameObject ex = Instantiate(ExplosionPrefab, transform.position + effectOffset, Quaternion.identity);
+    
+       
+
     }
     private void PlayHitSound()
     {

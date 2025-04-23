@@ -14,13 +14,13 @@ public class BossChaseState : StateMachineBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         borderCheck = animator.GetComponent<BossLevel1>().borderCheck;
-      
+       
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      
+        if (target == null) return;
         Vector2 newPos = new Vector2(target.position.x, animator.transform.position.y);
         animator.transform.position = Vector2.MoveTowards(animator.transform.position, newPos, speed * Time.deltaTime);
         if (Physics2D.Raycast(borderCheck.position, Vector2.down, 2, groundLayer) == false)
@@ -28,14 +28,9 @@ public class BossChaseState : StateMachineBehaviour
 
         float distance = Vector2.Distance(target.position, animator.transform.position);
         if (distance <= 1.5f)
-            animator.SetBool("IsAttacking", true);
+            animator.SetBool("isAttacking", true);
 
-        if (target == null || target.gameObject.activeInHierarchy == false)
-        {
-            animator.SetBool("isChasing", false);
-            animator.SetBool("IsAttacking", false);
-            return;
-        }
+       
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

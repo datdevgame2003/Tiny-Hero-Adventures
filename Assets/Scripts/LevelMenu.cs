@@ -22,6 +22,8 @@ public class LevelMenu : MonoBehaviour
     }
     public void OpenMenu(int levelid)
     {
+        AudioManager.instance.Play("Click");
+        AudioManager.instance.Stop("Musicgame");
         string levelName = "Level " + levelid;
         SceneManager.LoadScene(levelName);
     }

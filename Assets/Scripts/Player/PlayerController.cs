@@ -33,9 +33,9 @@ public class PlayerController : MonoBehaviour
         {
             doubleJump = false;
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-          if(allowJump || doubleJump)
+            if (allowJump || doubleJump)
             {
                 body.velocity = new Vector2(body.velocity.x, jumpForce);
                 doubleJump = !doubleJump;
@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("run", horizontalInput != 0);
       
     }
-  
+
 
     //private void Jump()
     //{

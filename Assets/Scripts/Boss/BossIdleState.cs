@@ -12,11 +12,14 @@ public class BossIdleState : StateMachineBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
         borderCheck = animator.GetComponent<BossLevel1>().borderCheck;
+        
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (target == null) return;
+
         if (Physics2D.Raycast(borderCheck.position, Vector2.down, 2, groundLayer) == false)
             return;
 

@@ -3,47 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EnemySpawner : MonoBehaviour
 {
-    //public Transform spawnPoint;
-    [SerializeField] private float spawnInterval = 2f;
-    //[SerializeField] private List<GameObject> paths;
-    [SerializeField] private int maxEnemies = 5;
-    private int currentEnemyCount = 0;
-    [SerializeField] private List<Transform> spawnPoints;
-    private void Start()
+    [Header("Enemy Settings")]
+    public GameObject enemyPrefab;               
+    public int enemyAmount = 5;                 
+    public float spawnDelay = 2f;                
+
+    [Header("Spawn Points")]
+    public Transform[] spawnPoints;             
+
+    void Start()
     {
         StartCoroutine(SpawnEnemies());
-}
-private IEnumerator SpawnEnemies()
-{
-    while (true)
-    {
-        yield return new WaitForSeconds(spawnInterval);
-        if (currentEnemyCount < maxEnemies)
-        {
-            SpawnEnemy();
-        }
+    }
 
+    IEnumerator SpawnEnemies()
+    {
+        for (int i = 0; i < enemyAmount; i++)
+        {
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+
+            yield return new WaitForSeconds(spawnDelay);
+        }
     }
 }
-private void SpawnEnemy()
-{
-      
-        if (spawnPoints.Count == 0) return; 
 
-       
-        Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
-       
-        //Golem enemy = EnemyPool.Instance.GetEnemy(randomSpawnPoint.position);
-  //  enemy.GetComponent<EnemyHealth>()?.ResetHealth();
-       
-        currentEnemyCount++;
 
-}
-public void EnemyDestroyed()
-{
-    currentEnemyCount--;
-}
-
-}
